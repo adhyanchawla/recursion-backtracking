@@ -96,6 +96,87 @@ public class coinChange {
 
     //===========================================================================================
 
+    //subsequence method
+    public static int infiPermutationsSubseq(int[] coins, int idx, int tar, String asf) {
+        if(tar == 0 || idx >= coins.length) {
+            if(tar == 0) {
+                System.out.println(asf);
+                return 1;
+            }
+            return 0;
+        }
+
+        int count = 0;
+        if(tar - coins[idx] >= 0) {
+            count += infiPermutationsSubseq(coins, 0, tar - coins[idx], asf + coins[idx]);
+        }
+
+        count += infiPermutationsSubseq(coins, idx + 1, tar, asf);
+
+        return count;
+    }
+
+    //===========================================================================================
+    public static int singleCombinationSubseq(int[] coins, int idx, int tar, String asf) {
+        if(tar == 0 || idx >= coins.length) {
+            if(tar == 0) {
+                System.out.println(asf);
+                return 1;
+            }
+            return 0;
+        }
+
+        int count = 0;
+        if(tar - coins[idx] >= 0) {
+            count += singleCombinationSubseq(coins, idx + 1, tar - coins[idx], asf + coins[idx]);
+        }
+        count += singleCombinationSubseq(coins, idx + 1, tar, asf);
+
+        return count;
+    }
+
+    //============================================================================================
+    public static int infiCombinationSubseq(int[] coins, int idx, int tar, String asf) {
+        if(tar == 0 || idx >= coins.length) {
+            if(tar == 0) {
+                System.out.println(asf);
+                return 1;
+            }
+            return 0;
+        }
+
+        int count = 0;
+        if(tar - coins[idx] >= 0) {
+            count += infiCombinationSubseq(coins, idx, tar - coins[idx], asf + coins[idx]);
+        }
+        count += infiCombinationSubseq(coins, idx + 1, tar, asf);
+
+        return count;
+    }
+
+    //=================================================================================================
+    public static int singlePermutationSubseq(int[] coins, int idx, int tar, String asf, boolean[] vis) {
+        if(tar == 0 || idx >= coins.length) {
+            if(tar == 0) {
+                System.out.println(asf);
+                return 1;
+            }
+            return 0;
+        }
+
+        int count = 0;
+        if(tar - coins[idx] >= 0) {
+            if(!vis[idx]) {
+                vis[idx] = true;
+                count += singlePermutationSubseq(coins, 0, tar - coins[idx], asf + coins[idx], vis);
+                vis[idx] = false;
+            }
+        }
+        count += singlePermutationSubseq(coins, idx + 1, tar, asf, vis);
+
+        return count;
+    }
+
     public static void main(String[] args) {
         int[] coins = {2, 3, 5, 7};
         // System.out.println(infiPermutations(coins, 10, ""));
@@ -103,6 +184,10 @@ public class coinChange {
         // System.out.println(singleCombination(coins, 10, 0, ""));
         boolean [] visited = new boolean[coins.length];
         //System.out.println(singlePermutation(coins, 10, visited, ""));
-        System.out.println(singlePermutation01(coins, 10, ""));
+        //System.out.println(singlePermutation01(coins, 10, ""));
+        //System.out.println(singleCombinationSubseq(coins, 0, 10, ""));
+        //System.out.println(infiCombinationSubseq(coins, 0, 10, ""));
+        //System.out.println(infiPermutationsSubseq(coins, 0, 10, ""));
+        //System.out.println(singlePermutationSubseq(coins, 0, 10, "", visited));
     }
 }
